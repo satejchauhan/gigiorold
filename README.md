@@ -32,6 +32,8 @@ Change both in `backend/config.php` before any public host.
 Root `vercel.json` builds the Vite app from `frontend/` and publishes `frontend/dist`.
 
 Site images live only in `frontend/public/images` (copied into the build as `/images/...`).  
+Filenames, pixel sizes, and file-size caps are in [docs/images.md](docs/images.md).  
+A Word copy is [docs/GIGIOR-image-requirements.docx](docs/GIGIOR-image-requirements.docx).  
 `backend/public/images` is a symlink to that folder for local PHP.
 
 SPA routing only rewrites paths **without** a file extension, so `/images/*.png` is served as static files — not `index.html`.
