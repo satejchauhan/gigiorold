@@ -245,7 +245,7 @@
   gap: 1.6rem;
 }
 
-.nav-desktop a,
+.nav-desktop a:not(.btn),
 .nav-toggle {
   font-size: 0.72rem;
   font-weight: 500;
@@ -256,13 +256,23 @@
   padding: 0;
 }
 
-.nav-desktop a:hover {
+.nav-desktop a:not(.btn):hover {
   opacity: 0.55;
 }
 
-.nav-desktop a.active {
+.nav-desktop a.active:not(.btn) {
   opacity: 1;
   box-shadow: inset 0 -1px 0 var(--terracotta);
+}
+
+.nav-desktop .btn--fill {
+  padding: 0.72rem 1.15rem 0.72rem 1.25rem;
+  min-height: 44px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  background: var(--btn);
+  color: var(--on-btn);
 }
 
 .mega {
@@ -291,7 +301,10 @@
 
 .mega__feature {
   position: relative;
+  display: flex;
+  align-items: flex-end;
   min-height: 320px;
+  color: #fff8f1;
   background: var(--ink);
   overflow: hidden;
 }
@@ -311,7 +324,12 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 35%, color-mix(in srgb, var(--ink) 78%, transparent));
+  background: linear-gradient(
+    180deg,
+    transparent 28%,
+    color-mix(in srgb, var(--ink) 46%, transparent) 58%,
+    color-mix(in srgb, var(--ink) 84%, transparent) 100%
+  );
 }
 
 .mega__feature-copy {
@@ -321,8 +339,10 @@
   width: 100%;
 }
 
-.mega__feature .eyebrow {
-  color: color-mix(in srgb, var(--ivory) 68%, transparent);
+.mega__feature .eyebrow,
+.mega__feature h3,
+.mega__feature p {
+  color: #fff8f1;
 }
 
 .mega__feature h3 {
@@ -333,7 +353,6 @@
 }
 
 .mega__feature p {
-  color: color-mix(in srgb, var(--ivory) 82%, transparent);
   margin-top: 0.2rem;
 }
 
