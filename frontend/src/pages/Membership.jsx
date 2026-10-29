@@ -15,7 +15,7 @@ export default function Membership() {
       <p style={{ maxWidth: '48ch' }}>Relationship and access — priority in the book, a named practitioner, scheduled reviews. Not a percentage off.</p>
       <div className="card-grid" style={{ marginTop: '2.4rem' }}>
         {rows.map((m) => (
-          <article key={m.name} style={{ background: 'var(--cream)', padding: '1.6rem' }}>
+          <article key={m.name} style={{ background: 'var(--surface)', padding: '1.6rem' }}>
             <h2 className="display" style={{ fontSize: '2.4rem' }}>{m.name}</h2>
             <p>{m.tagline}</p>
             <p className="eyebrow" style={{ margin: '0.8rem 0' }}>{m.price_label}</p>

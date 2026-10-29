@@ -3,21 +3,22 @@ import { createPortal } from 'react-dom'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Btn, Picture } from './Ui'
 import { api } from '../lib/api'
+import { megaImages } from '../data/catalog'
 import { useLenis } from '../lib/SmoothScroll'
 
 const SALON = [
-  ['Hair', '/salon/hair', '/images/mega-hair.png', 'Cut, colour, treatments, styling.'],
-  ['Makeup', '/salon/makeup', '/images/mega-makeup.png', 'Skin-led makeup for daylight and night.'],
+  ['Hair', '/salon/hair', megaImages.hair, 'Cut, colour, treatments, styling.'],
+  ['Makeup', '/salon/makeup', megaImages.makeup, 'Skin-led makeup for daylight and night.'],
   ['Nails', '/salon/nails', '/images/mega-nails.png', 'Clean shape, quiet colour.'],
-  ['Bridal', '/salon/bridal', '/images/mega-bridal.png', 'Trials first. The day, unhurried.'],
-  ['Grooming', '/salon/grooming', '/images/mega-grooming.png', 'Cut, beard, and skin — one chair.'],
+  ['Bridal', '/salon/bridal', megaImages.bridal, 'Trials first. The day, unhurried.'],
+  ['Grooming', '/salon/grooming', megaImages.grooming, 'Cut, beard, and skin — one chair.'],
 ]
 
 const AESTHETICS = [
-  ['Skin', '/aesthetics/skin', '/images/mega-skin.png', 'Rituals, pigment, and barrier work.'],
-  ['Injectables', '/aesthetics/injectables', '/images/mega-injectables.png', 'Movement softened. Character kept.'],
-  ['Laser', '/aesthetics/laser', '/images/mega-laser.png', 'Hair and tone, with named devices.'],
-  ['Hair restoration', '/aesthetics/hair-restoration', '/images/mega-restoration.png', 'Density as a plan, not a promise.'],
+  ['Skin', '/aesthetics/skin', megaImages.skin, 'Rituals, pigment, and barrier work.'],
+  ['Injectables', '/aesthetics/injectables', megaImages.injectables, 'Movement softened. Character kept.'],
+  ['Laser', '/aesthetics/laser', megaImages.laser, 'Hair and tone, with named devices.'],
+  ['Hair restoration', '/aesthetics/hair-restoration', megaImages.restoration, 'Density as a plan, not a promise.'],
   ['Body', '/aesthetics/body', '/images/mega-body.png', 'Contour and skin quality, conservatively.'],
 ]
 
@@ -75,7 +76,7 @@ export function Header({ nav }) {
     <header className={`site-header ${slim ? 'is-slim' : ''} ${open ? 'is-open' : ''}`}>
       <div className="site-header__bar">
         <Link to="/" className="brand wordmark" aria-label="GIGIOR home">
-          <strong>GIGIOR</strong>
+          <strong>Gigior</strong>
           <span>{brand.descriptor || 'SALON · AESTHETIC'}</span>
         </Link>
 
@@ -109,8 +110,6 @@ export function Header({ nav }) {
       {open && createPortal(
         <div className="nav-mobile" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="nav-mobile__scroll">
-            <p className="nav-mobile__intro">Salon · Aesthetic</p>
-
             <div className={`nav-mobile__acc ${expanded === 'salon' ? 'is-open' : ''}`}>
               <button type="button" className="nav-mobile__acc-btn" aria-expanded={expanded === 'salon'} onClick={() => toggleSection('salon')}>
                 <span>Salon</span>
@@ -216,7 +215,7 @@ export function Footer() {
       <div className="wrap">
         <div className="footer-grid">
           <div>
-            <p className="wordmark footer-mark">GIGIOR</p>
+            <p className="wordmark footer-mark">Gigior</p>
             <p className="eyebrow">Salon · Aesthetic</p>
             <p className="footer-line">Letters from the house. Rarely, and never loudly.</p>
             <form className="subscribe" onSubmit={onSubmit}>

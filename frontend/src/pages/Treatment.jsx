@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { api } from '../lib/api'
 import { Btn, Picture } from '../components/Ui'
+import { AudienceSwitch, useAudience } from '../lib/audience'
+import { hasMaleImage, serviceImage } from '../data/catalog'
 
 export default function Treatment() {
   const { pillar, category, slug } = useParams()
   const [data, setData] = useState(null)
   const [err, setErr] = useState('')
+  const [audience] = useAudience()
 
   useEffect(() => {
     api.service(pillar, slug).then(setData).catch((e) => setErr(e.message))
@@ -35,7 +38,10 @@ export default function Treatment() {
             <Btn to="/finder">Not sure?</Btn>
           </div>
         </div>
-        <Picture src={s.image} alt={s.name} sizes="50vw" />
+        <div>
+          {hasMaleImage(s.slug) && <AudienceSwitch />}
+          <Picture src={serviceImage(s.slug, audience)} alt={s.name} sizes="50vw" />
+        </div>
       </div>
 
       <section className="section--tight">
@@ -120,7 +126,7 @@ export default function Treatment() {
         <div className="card-grid">
           {data.related.map((r) => (
             <Link key={r.slug} to={`/${r.pillar}/${r.category}/${r.slug}`}>
-              <Picture src={r.image} alt="" sizes="300px" />
+              <Picture src={serviceImage(r.slug, audience)} alt="" sizes="300px" />
               <h3 className="display" style={{ fontSize: '1.6rem' }}>{r.name}</h3>
             </Link>
           ))}
@@ -129,7 +135,7 @@ export default function Treatment() {
 
       <section className="final-cta section">
         <h2 className="display">{consult ? 'Confirm fit in a consultation.' : 'Reserve this in the book.'}</h2>
-        <Btn to={bookTo} fill light>{consult ? 'Book a consultation' : 'Book appointment'}</Btn>
+        <Btn to={bookTo} fill>{consult ? 'Book a consultation' : 'Book appointment'}</Btn>
       </section>
     </article>
   )

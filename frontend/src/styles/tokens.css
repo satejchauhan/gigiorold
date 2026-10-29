@@ -1,17 +1,35 @@
 :root {
-  --gigior: #391b0d;
-  --ivory: #f6f1e8;
-  --cream: #efe8dc;
-  --sand: #e4d5c4;
-  --gigior-soft: color-mix(in srgb, var(--gigior) 78%, var(--ivory));
-  --header: 88px;
-  --header-slim: 56px;
+  /* Official Gigior 2026 */
+  --terracotta: #c75f2a;
+  --cream: #fce9d0;
+  --olive: #837747;
+
+  /* Supporting UI. Ink is the reading colour; button fill is the same terracotta hue, darkened so white labels clear 4.5:1 (exact #C75F2A with white is 4.12). */
+  --ink: #2b241e;
+  --muted: #5c534a;
+  --surface: #fff8f1;
+  --line: #e4d0b8;
+  --btn: #b75727;
+  --btn-hover: #9a4318;
+  --on-btn: #ffffff;
+  --danger: #8c3a2f;
+  --danger-bg: #f8ebe6;
+
+  --ivory: var(--cream);
+  --sand: var(--line);
+  --gigior: var(--terracotta);
+  --gigior-soft: var(--muted);
+
+  --header: 96px;
+  --header-slim: 76px;
   --max: 1180px;
   --pad: clamp(1.15rem, 4vw, 3.5rem);
-  --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
-  --sans: "Outfit", "Avenir Next", system-ui, sans-serif;
+  --serif: "Bodoni Moda", Didot, "Bodoni MT", Georgia, serif;
+  --sans: "Poppins", "Avenir Next", system-ui, sans-serif;
+  --script: "Great Vibes", "Segoe Script", cursive;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --radius: 5px;
+  --radius: 2px;
+  --shadow: 0 10px 30px color-mix(in srgb, var(--ink) 6%, transparent);
 }
 
 html {
@@ -40,14 +58,15 @@ html.lenis body {
 
 @media (max-width: 1099px) {
   :root {
-    --header: 76px;
+    --header: 84px;
+    --header-slim: 72px;
   }
 }
 
 @media (max-width: 699px) {
   :root {
-    --header: 68px;
-    --header-slim: 52px;
+    --header: 78px;
+    --header-slim: 68px;
     --pad: 1.1rem;
   }
 }

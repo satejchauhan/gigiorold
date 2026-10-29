@@ -3,17 +3,19 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import { api } from '../lib/api'
 import { Btn, Picture } from '../components/Ui'
 import { Reveal } from '../components/Reveal'
+import { AudienceSwitch, useAudience } from '../lib/audience'
+import { photos, serviceImage } from '../data/catalog'
 
 const COPY = {
   salon: {
     title: 'Salon',
     line: 'Hair, styling, and beauty craft. Prices from the chair — quoted in daylight.',
-    image: '/images/pillar-salon.png',
+    image: photos.beautyCraft,
   },
   aesthetics: {
     title: 'Aesthetics',
     line: 'Clinically-led skin and facial work. Plans, not packages. Consultation first.',
-    image: '/images/pillar-aesthetics.png',
+    image: photos.facialWork,
   },
 }
 
@@ -26,6 +28,7 @@ export default function Pillar() {
   }, [])
   const meta = COPY[pillar] || COPY.salon
   const groups = data?.[pillar] || {}
+  const [audience] = useAudience()
 
   return (
     <>
@@ -34,6 +37,7 @@ export default function Pillar() {
         <p className="eyebrow">{meta.title}</p>
         <h1 className="display">{meta.title}</h1>
         <p>{meta.line}</p>
+        {pillar === 'salon' && <AudienceSwitch />}
         <div className="btn-row" style={{ marginTop: '1.2rem' }}>
           <Btn to="/finder">Treatment finder</Btn>
           <Btn to={`/book?path=${pillar === 'aesthetics' ? 'consult' : 'service'}`} fill>
@@ -51,7 +55,7 @@ export default function Pillar() {
             <div className="card-grid" style={{ marginTop: '1.2rem' }}>
               {items.map((s) => (
                 <Reveal as="article" className="card" key={s.slug}>
-                  <Picture src={s.image} alt={s.name} sizes="360px" />
+                  <Picture src={serviceImage(s.slug, audience)} alt={s.name} sizes="360px" />
                   <h3>{s.name}</h3>
                   <p className="muted">{s.short_line}</p>
                   <Btn to={`/${s.pillar}/${s.category}/${s.slug}`}>Learn more</Btn>
@@ -73,6 +77,8 @@ export function Category() {
   }, [pillar, category])
   const items = data?.[pillar]?.[category] || []
   const title = category?.replace('-', ' ')
+  const [audience] = useAudience()
+  const gendered = pillar === 'salon' && ['hair', 'makeup', 'bridal', 'grooming'].includes(category)
 
   return (
     <div className="wrap page-hero">
@@ -80,10 +86,11 @@ export function Category() {
         <Link to="/">Home</Link> / <Link to={`/${pillar}`}>{pillar}</Link> / {title}
       </p>
       <h1 className="display" style={{ textTransform: 'capitalize' }}>{title}</h1>
+      {gendered && <AudienceSwitch />}
       <div className="card-grid" style={{ marginTop: '2rem' }}>
         {items.map((s) => (
           <article className="card" key={s.slug}>
-            <Picture src={s.image} alt={s.name} sizes="360px" />
+            <Picture src={serviceImage(s.slug, audience)} alt={s.name} sizes="360px" />
             <h3>{s.name}</h3>
             <p className="muted">{s.benefit}</p>
             <Btn to={`/${s.pillar}/${s.category}/${s.slug}`} fill>Learn more</Btn>

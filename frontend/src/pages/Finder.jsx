@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { api } from '../lib/api'
 import { Btn, Picture } from '../components/Ui'
+import { useAudience } from '../lib/audience'
+import { serviceImage } from '../data/catalog'
 
 const CONCERNS = ['Skin', 'Hair', 'Face', 'Body', 'Ageing', 'Acne', 'Pigmentation', 'Hair Loss', 'Bridal Prep']
 
 export default function Finder() {
   const [concern, setConcern] = useState('')
   const [found, setFound] = useState(null)
+  const [audience] = useAudience()
 
   async function pick(name) {
     const slug = name.toLowerCase().replace(/\s+/g, '-')
@@ -43,7 +46,7 @@ export default function Finder() {
             )}
             {(found.items || []).map((s) => (
               <article className="finder-hit" key={s.slug}>
-                <Picture src={s.image} alt={s.name} sizes="140px" />
+                <Picture src={serviceImage(s.slug, audience)} alt={s.name} sizes="140px" />
                 <div>
                   <h3 className="display">{s.name}</h3>
                   <p className="muted">{s.benefit}</p>
@@ -56,7 +59,7 @@ export default function Finder() {
             <p className="eyebrow">Not sure?</p>
             <h3 className="display">Skip the names</h3>
             <p>Tell us what is on your mind.</p>
-            <Btn to="/book?path=consult" fill light>Book a consultation</Btn>
+            <Btn to="/book?path=consult" fill>Book a consultation</Btn>
           </aside>
         </div>
       )}

@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import { Header, Footer, StickyMobile } from './components/Chrome'
 import { SmoothScroll } from './lib/SmoothScroll'
 import { api } from './lib/api'
+import { AudienceProvider } from './lib/audience'
 import Home from './pages/Home'
 const Pillar = lazy(() => import('./pages/Pillar'))
 const Category = lazy(() => import('./pages/Pillar').then((m) => ({ default: m.Category })))
@@ -30,6 +31,7 @@ export default function App() {
   }, [])
 
   return (
+    <AudienceProvider>
     <SmoothScroll>
       <a className="skip" href="#main">Skip to content</a>
       <Header nav={nav} />
@@ -65,5 +67,6 @@ export default function App() {
         whatsapp={nav?.brand?.whatsapp ? `https://wa.me/${nav.brand.whatsapp.replace(/\D/g, '')}` : undefined}
       />
     </SmoothScroll>
+    </AudienceProvider>
   )
 }

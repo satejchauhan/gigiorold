@@ -4,14 +4,30 @@ import { api } from '../lib/api'
 import { Btn, Picture } from '../components/Ui'
 import { Reveal } from '../components/Reveal'
 import { usePageTitle } from '../lib/usePageTitle'
+import { AudienceSwitch, useAudience } from '../lib/audience'
+import { journalImage, photos, serviceImage } from '../data/catalog'
 
 const CONCERNS = ['Skin', 'Hair', 'Face', 'Body', 'Ageing', 'Acne', 'Pigmentation', 'Hair Loss', 'Bridal Prep']
+
+const COVERS = [
+  { src: photos.covers[0], alt: 'GIGIOR cover — beyond the ordinary' },
+  { src: photos.covers[1], alt: 'GIGIOR colour cover' },
+  { src: photos.covers[2], alt: 'GIGIOR skin cover' },
+]
 
 export default function Home() {
   usePageTitle('')
   const [data, setData] = useState(null)
   const [concern, setConcern] = useState('')
   const [found, setFound] = useState(null)
+  const [cover, setCover] = useState(0)
+  const [audience] = useAudience()
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
+    const id = window.setInterval(() => setCover((n) => (n + 1) % COVERS.length), 7000)
+    return () => window.clearInterval(id)
+  }, [])
 
   useEffect(() => {
     api.home().then(setData).catch(() => setData({ brand: {} }))
@@ -37,25 +53,25 @@ export default function Home() {
 
   return (
     <>
-      <section className="hero">
-        <Picture
-          src="/images/hero-home.png"
-          alt="Sunlit hair in the GIGIOR rooms"
-          sizes="100vw"
-          eager
-        />
-        <div className="hero__scrim" />
-        <div className="wrap hero__content">
-          <p className="eyebrow">GIGIOR</p>
-          <h1 className="display">{brand.tagline || 'Hair and skin, held to one standard.'}</h1>
-          <p>{brand.support || 'Consultation-led salon and aesthetic work — composed, never hurried.'}</p>
-          <div className="btn-row">
-            <Btn to="/book" fill light>Reserve</Btn>
-            <Btn to="/finder" light>Explore treatments</Btn>
-          </div>
-          <p className="eyebrow hero__meta">
-            {brand.years || '8'} years · {brand.locations_count || '1'} house · {brand.practitioners_count || '12'} practitioners
-          </p>
+      <section className="hero hero--cover" aria-roledescription="carousel" aria-label="GIGIOR covers">
+        <h1 className="visually-hidden">{brand.tagline || 'Hair and skin, held to one standard.'}</h1>
+        <div className={`hero__frame hero__frame--${cover + 1}`}>
+          <img src={COVERS[cover].src} alt={COVERS[cover].alt} />
+          <Link className="hero__hit hero__hit--reserve" to="/book">Reserve</Link>
+          <Link className="hero__hit hero__hit--explore" to="/finder">Explore treatments</Link>
+        </div>
+        <div className="hero__dots" role="tablist" aria-label="Covers">
+          {COVERS.map((item, i) => (
+            <button
+              key={item.src}
+              type="button"
+              role="tab"
+              aria-selected={i === cover}
+              aria-label={`Cover ${i + 1}`}
+              className={i === cover ? 'is-on' : ''}
+              onClick={() => setCover(i)}
+            />
+          ))}
         </div>
       </section>
 
@@ -78,7 +94,7 @@ export default function Home() {
 
       <section className="split">
         <Link to="/salon">
-          <Picture src={data?.split?.salon?.image || '/images/split-salon.png'} alt="GIGIOR salon" sizes="50vw" />
+          <Picture src={photos.beautyCraft} alt="Hair, styling, and beauty craft" sizes="50vw" />
           <div className="split__copy">
             <p className="eyebrow">Enter</p>
             <h2 className="display">Salon</h2>
@@ -88,7 +104,7 @@ export default function Home() {
           </div>
         </Link>
         <Link to="/aesthetics">
-          <Picture src={data?.split?.aesthetics?.image || '/images/split-aesthetics.png'} alt="GIGIOR aesthetics" sizes="50vw" />
+          <Picture src={photos.facialWork} alt="Clinically-led skin and facial work" sizes="50vw" />
           <div className="split__copy">
             <p className="eyebrow">Enter</p>
             <h2 className="display">Aesthetics</h2>
@@ -102,14 +118,19 @@ export default function Home() {
       <section className="section">
         <div className="wrap">
           <Reveal>
-            <p className="eyebrow">Signature services</p>
-            <h2 className="display" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', margin: '0.4rem 0 1.6rem' }}>What we keep in the book</h2>
+            <div className="section-head">
+              <div>
+                <p className="eyebrow">Signature services</p>
+                <h2 className="display" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', margin: '0.4rem 0 0' }}>What we keep in the book</h2>
+              </div>
+              <AudienceSwitch />
+            </div>
           </Reveal>
         </div>
         <div className="h-scroll h-scroll--bleed">
           {(data?.signature || []).map((s) => (
             <article className="card" key={s.slug}>
-              <Picture src={s.image} alt={s.name} sizes="400px" />
+              <Picture src={serviceImage(s.slug, audience)} alt={s.name} sizes="400px" />
               <h3>{s.name}</h3>
               <p className="muted">{s.benefit}</p>
               <p className="muted">{s.duration_label}{s.booking_mode === 'direct' && s.price_label ? ` · ${s.price_label}` : ''}</p>
@@ -124,7 +145,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section" style={{ background: 'var(--cream)' }}>
+      <section className="section" style={{ background: 'var(--surface)' }}>
         <div className="wrap">
           <Reveal>
             <p className="eyebrow">Treatment finder</p>
@@ -145,7 +166,7 @@ export default function Home() {
               <div className="finder-panel__grid">
                 {(found.items || []).map((s) => (
                   <article className="finder-hit" key={s.slug}>
-                    <Picture src={s.image} alt="" sizes="140px" />
+                    <Picture src={serviceImage(s.slug, audience)} alt="" sizes="140px" />
                     <div>
                       <h3 className="display">{s.name}</h3>
                       <p className="muted">{s.benefit}</p>
@@ -158,7 +179,7 @@ export default function Home() {
                 <p className="eyebrow">Not sure?</p>
                 <h3 className="display">Book a consultation</h3>
                 <p>You do not need the treatment name.</p>
-                <Btn to="/book?path=consult" fill light>Reserve a consult</Btn>
+            <Btn to="/book?path=consult" fill>Reserve a consult</Btn>
               </aside>
             </div>
           )}
@@ -190,7 +211,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section" style={{ background: 'var(--cream)' }}>
+      <section className="section" style={{ background: 'var(--surface)' }}>
         <div className="wrap">
           <Reveal>
             <p className="eyebrow">Experts</p>
@@ -222,7 +243,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section" style={{ background: 'var(--cream)' }} id="technology">
+      <section className="section" style={{ background: 'var(--surface)' }} id="technology">
         <div className="wrap two">
           <Reveal>
             <p className="eyebrow">Technology & rooms</p>
@@ -230,7 +251,7 @@ export default function Home() {
             <p style={{ marginTop: '1rem', maxWidth: '48ch' }}>The aesthetic room is quieter than the salon floor. Devices are named at consultation. Photography here is of our rooms — not a stock clinic corridor.</p>
           </Reveal>
           <figure className="editorial">
-            <Picture src="/images/tech-still.png" alt="Named devices in the GIGIOR rooms" sizes="50vw" />
+            <Picture src={photos.techStill} alt="Facial mapping in the GIGIOR rooms" sizes="50vw" />
           </figure>
         </div>
       </section>
@@ -249,7 +270,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section" style={{ background: 'var(--cream)' }}>
+      <section className="section" style={{ background: 'var(--surface)' }}>
         <div className="wrap two">
           <div>
             <p className="eyebrow">Membership</p>
@@ -284,7 +305,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section" style={{ background: 'var(--cream)' }}>
+      <section className="section" style={{ background: 'var(--surface)' }}>
         <div className="wrap">
           <Reveal style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
             <div>
@@ -296,7 +317,7 @@ export default function Home() {
           <div className="card-grid" style={{ marginTop: '1.4rem' }}>
             {(data?.journal || []).map((a) => (
               <Link className="journal-card" to={`/journal/${a.slug}`} key={a.slug}>
-                <Picture src={a.image} alt="" sizes="360px" />
+                <Picture src={journalImage(a.slug) || a.image} alt="" sizes="360px" />
                 <p className="eyebrow" style={{ marginTop: '0.8rem' }}>{a.category}</p>
                 <h3 className="display" style={{ fontSize: '1.7rem' }}>{a.title}</h3>
               </Link>
@@ -310,8 +331,8 @@ export default function Home() {
           <p className="eyebrow">Next</p>
           <h2 className="display">Your next visit begins with a consultation.</h2>
           <div className="btn-row" style={{ justifyContent: 'center' }}>
-            <Btn to="/book" fill light>Reserve</Btn>
-            <Btn href={wa} light>Talk to an expert</Btn>
+            <Btn to="/book" fill>Reserve</Btn>
+            <Btn href={wa}>Talk to an expert</Btn>
           </div>
         </div>
       </section>

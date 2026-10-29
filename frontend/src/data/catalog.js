@@ -1,5 +1,69 @@
 const img = (file) => `/images/${file}.png`
 
+export const photos = {
+  covers: ['/images/hero-cover-01.png', '/images/hero-cover-02.png', '/images/hero-cover-03.png'],
+  beautyCraft: '/images/split-salon.png',
+  facialWork: '/images/split-aesthetics.png',
+  techStill: '/images/tech-still.png',
+}
+
+const women = {
+  'signature-cut': '/images/svc-cut.png',
+  colour: '/images/svc-colour.png',
+  makeup: '/images/svc-makeup.png',
+  bridal: '/images/svc-bridal.png',
+  'hair-treatments': '/images/svc-treatments.png',
+  'ritual-facial': '/images/svc-ritual.png',
+  'acne-plan': '/images/svc-acne.png',
+  pigmentation: '/images/svc-pigment.png',
+  rejuvenation: '/images/svc-rejuvenation.png',
+  'expression-lines': '/images/svc-expression.png',
+  'facial-balancing': '/images/svc-balancing.png',
+  laser: '/images/svc-laser.png',
+  nails: '/images/svc-nails.png',
+  styling: '/images/svc-styling.png',
+  body: '/images/svc-body.png',
+}
+
+const men = {
+  'signature-cut': '/images/svc-cut-m.png',
+  colour: '/images/svc-colour-m.png',
+  makeup: '/images/svc-makeup-m.png',
+  bridal: '/images/svc-bridal-m.png',
+  grooming: '/images/svc-grooming.png',
+  'hair-restoration': '/images/svc-restoration.png',
+}
+
+export function serviceImage(slug, audience = 'women') {
+  if (audience === 'men' && men[slug]) return men[slug]
+  return women[slug] || men[slug] || ''
+}
+
+export function hasMaleImage(slug) {
+  return Boolean(men[slug])
+}
+
+export function journalImage(slug) {
+  const map = {
+    'retinol-vs-peels': '/images/j-retinol.png',
+    'lived-in-colour': '/images/j-colour.png',
+    'consultation-first': '/images/j-consult.png',
+    'bridal-timeline': '/images/j-bridal.png',
+  }
+  return map[slug] || ''
+}
+
+export const megaImages = {
+  hair: photos.beautyCraft,
+  makeup: women.makeup,
+  bridal: women.bridal,
+  grooming: men.grooming,
+  skin: photos.facialWork,
+  injectables: photos.facialWork,
+  laser: photos.facialWork,
+  restoration: men['hair-restoration'],
+}
+
 const EXTRA = {
   who: ['You want a considered change, not a costume', 'You prefer daylight and an honest consult', 'You can keep a simple cadence at home'],
   benefits: ['A plan before any product or needle', 'Work composed for your canvas', 'Aftercare you can actually follow', 'The same faces on return visits'],
@@ -34,23 +98,23 @@ export const brand = {
 }
 
 export const services = [
-  { pillar: 'salon', category: 'hair', slug: 'signature-cut', name: 'Signature cut & finish', short_line: 'A line that holds beyond the blow-dry.', benefit: 'Cut and finish composed for your bone structure.', overview: 'Consultation, cut, and a considered finish in daylight.', duration_label: 'from 60 min', price_from: 85, price_label: 'From 85', booking_mode: 'direct', image: img('svc-cut'), extra: EXTRA },
-  { pillar: 'salon', category: 'hair', slug: 'colour', name: 'GIGIOR colour', short_line: 'Lived-in colour mixed for your light.', benefit: 'Dimension without a harsh line.', overview: 'Gloss, balayage, and corrective colour mixed in daylight — never copied from a screen.', duration_label: 'from 2 hrs', price_from: 160, price_label: 'From 160', booking_mode: 'direct', image: img('svc-colour'), extra: EXTRA },
-  { pillar: 'salon', category: 'hair', slug: 'hair-treatments', name: 'Hair treatments', short_line: 'Strength and movement restored to the fibre.', benefit: 'Repair without weighing the hair down.', overview: 'Bond and moisture rituals chosen after a strand assessment.', duration_label: 'from 45 min', price_from: 70, price_label: 'From 70', booking_mode: 'direct', image: img('svc-treatments'), extra: EXTRA },
-  { pillar: 'salon', category: 'hair', slug: 'styling', name: 'Styling', short_line: 'A finish for the evening — or the Tuesday.', benefit: 'Blow-dry, set, or dressed hair.', overview: 'Editorial or quiet. Built to last the day you actually have.', duration_label: '45 min', price_from: 55, price_label: 'From 55', booking_mode: 'direct', image: img('svc-styling'), extra: EXTRA },
-  { pillar: 'salon', category: 'makeup', slug: 'makeup', name: 'Makeup', short_line: 'Skin-led makeup for daylight and night.', benefit: 'Your features, not a trend overlay.', overview: 'Consultation, skin prep, and a finish that photographs honestly.', duration_label: 'from 60 min', price_from: 90, price_label: 'From 90', booking_mode: 'direct', image: img('svc-makeup'), extra: EXTRA },
-  { pillar: 'salon', category: 'nails', slug: 'nails', name: 'Nails', short_line: 'Clean shape, quiet colour.', benefit: 'Hands that look considered, not costumed.', overview: 'Manicure, pedicure, and lasting colour — no novelty walls.', duration_label: 'from 45 min', price_from: 45, price_label: 'From 45', booking_mode: 'direct', image: img('svc-nails'), extra: EXTRA },
-  { pillar: 'salon', category: 'bridal', slug: 'bridal', name: 'Bridal & occasion', short_line: 'Trials first. The day, unhurried.', benefit: 'Hair and makeup that hold through the hours.', overview: 'A trial, a plan, and day-of attendance in the house or on location.', duration_label: 'by arrangement', price_from: 220, price_label: 'Trials from 220', booking_mode: 'direct', image: img('svc-bridal'), extra: EXTRA },
-  { pillar: 'salon', category: 'grooming', slug: 'grooming', name: 'Grooming', short_line: 'Cut, beard, and skin — one chair.', benefit: 'Precise, quiet grooming.', overview: 'Men’s cut, beard, and a simple skin finish.', duration_label: 'from 45 min', price_from: 50, price_label: 'From 50', booking_mode: 'direct', image: img('svc-grooming'), extra: EXTRA },
-  { pillar: 'aesthetics', category: 'skin', slug: 'ritual-facial', name: 'Ritual facial', short_line: 'A diagnostic hour, not a spa menu.', benefit: 'Skin that behaves better after, not just pinker.', overview: 'Analysis, treatment, massage, finish — products chosen in the room.', duration_label: '75 min', price_from: 140, price_label: 'From 140', booking_mode: 'either', image: img('svc-ritual'), extra: EXTRA },
-  { pillar: 'aesthetics', category: 'skin', slug: 'acne-plan', name: 'Acne plan', short_line: 'Congestion treated as a course, not a one-off.', benefit: 'Fewer breakouts, calmer barrier.', overview: 'A staged plan: consultation, in-room work, and a home cadence.', duration_label: 'course', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: img('svc-acne'), extra: EXTRA },
-  { pillar: 'aesthetics', category: 'skin', slug: 'pigmentation', name: 'Pigmentation', short_line: 'Evenness, without stripping the barrier.', benefit: 'Softer contrast in tone over a measured course.', overview: 'Peels, light, or topical plans — only after a consult.', duration_label: 'course', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: img('svc-pigment'), extra: EXTRA },
-  { pillar: 'aesthetics', category: 'skin', slug: 'rejuvenation', name: 'Skin rejuvenation', short_line: 'Texture and dew, built over sessions.', benefit: 'Skin that looks like rest.', overview: 'Needling, boosters, or medical facials as indicated.', duration_label: 'from 60 min', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: img('svc-rejuvenation'), extra: EXTRA },
-  { pillar: 'aesthetics', category: 'injectables', slug: 'expression-lines', name: 'Expression lines', short_line: 'Movement softened. Character kept.', benefit: 'A conservative, prescriber-led approach.', overview: 'Consultation required. Prescription anti-wrinkle treatment only where indicated.', duration_label: 'consult + treatment', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: img('svc-expression'), extra: EXTRA },
-  { pillar: 'aesthetics', category: 'injectables', slug: 'facial-balancing', name: 'Facial balancing', short_line: 'Proportion, not a trend.', benefit: 'Volume only where it serves the face you have.', overview: 'Hyaluronic acid, or a decision against it — after daylight examination.', duration_label: 'consult', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: img('svc-balancing'), extra: EXTRA },
-  { pillar: 'aesthetics', category: 'laser', slug: 'laser', name: 'Laser', short_line: 'Hair and tone, with named devices.', benefit: 'Fewer sessions when the device and the skin match.', overview: 'Laser hair and pigment work by certified operators. Consult first.', duration_label: 'from 20 min', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: img('svc-laser'), extra: EXTRA },
-  { pillar: 'aesthetics', category: 'hair-restoration', slug: 'hair-restoration', name: 'Hair restoration', short_line: 'Density as a plan, not a promise.', benefit: 'A medical conversation about what is possible.', overview: 'PRP or medical plans after assessment. Results vary.', duration_label: 'consult', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: img('svc-restoration'), extra: EXTRA },
-  { pillar: 'aesthetics', category: 'body', slug: 'body', name: 'Body', short_line: 'Contour and skin quality, conservatively.', benefit: 'Body work only when it is indicated.', overview: 'Consultation-led body treatments. Face remains our centre.', duration_label: 'consult', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: img('svc-body'), extra: EXTRA },
+  { pillar: 'salon', category: 'hair', slug: 'signature-cut', name: 'Signature cut & finish', short_line: 'A line that holds beyond the blow-dry.', benefit: 'Cut and finish composed for your bone structure.', overview: 'Consultation, cut, and a considered finish in daylight.', duration_label: 'from 60 min', price_from: 85, price_label: 'From 85', booking_mode: 'direct', image: serviceImage('signature-cut'), extra: EXTRA },
+  { pillar: 'salon', category: 'hair', slug: 'colour', name: 'GIGIOR colour', short_line: 'Lived-in colour mixed for your light.', benefit: 'Dimension without a harsh line.', overview: 'Gloss, balayage, and corrective colour mixed in daylight — never copied from a screen.', duration_label: 'from 2 hrs', price_from: 160, price_label: 'From 160', booking_mode: 'direct', image: serviceImage('colour'), extra: EXTRA },
+  { pillar: 'salon', category: 'hair', slug: 'hair-treatments', name: 'Hair treatments', short_line: 'Strength and movement restored to the fibre.', benefit: 'Repair without weighing the hair down.', overview: 'Bond and moisture rituals chosen after a strand assessment.', duration_label: 'from 45 min', price_from: 70, price_label: 'From 70', booking_mode: 'direct', image: serviceImage('hair-treatments'), extra: EXTRA },
+  { pillar: 'salon', category: 'hair', slug: 'styling', name: 'Styling', short_line: 'A finish for the evening — or the Tuesday.', benefit: 'Blow-dry, set, or dressed hair.', overview: 'Editorial or quiet. Built to last the day you actually have.', duration_label: '45 min', price_from: 55, price_label: 'From 55', booking_mode: 'direct', image: serviceImage('styling'), extra: EXTRA },
+  { pillar: 'salon', category: 'makeup', slug: 'makeup', name: 'Makeup', short_line: 'Skin-led makeup for daylight and night.', benefit: 'Your features, not a trend overlay.', overview: 'Consultation, skin prep, and a finish that photographs honestly.', duration_label: 'from 60 min', price_from: 90, price_label: 'From 90', booking_mode: 'direct', image: serviceImage('makeup'), extra: EXTRA },
+  { pillar: 'salon', category: 'nails', slug: 'nails', name: 'Nails', short_line: 'Clean shape, quiet colour.', benefit: 'Hands that look considered, not costumed.', overview: 'Manicure, pedicure, and lasting colour — no novelty walls.', duration_label: 'from 45 min', price_from: 45, price_label: 'From 45', booking_mode: 'direct', image: serviceImage('nails'), extra: EXTRA },
+  { pillar: 'salon', category: 'bridal', slug: 'bridal', name: 'Bridal & occasion', short_line: 'Trials first. The day, unhurried.', benefit: 'Hair and makeup that hold through the hours.', overview: 'A trial, a plan, and day-of attendance in the house or on location.', duration_label: 'by arrangement', price_from: 220, price_label: 'Trials from 220', booking_mode: 'direct', image: serviceImage('bridal'), extra: EXTRA },
+  { pillar: 'salon', category: 'grooming', slug: 'grooming', name: 'Grooming', short_line: 'Cut, beard, and skin — one chair.', benefit: 'Precise, quiet grooming.', overview: 'Men’s cut, beard, and a simple skin finish.', duration_label: 'from 45 min', price_from: 50, price_label: 'From 50', booking_mode: 'direct', image: serviceImage('grooming'), extra: EXTRA },
+  { pillar: 'aesthetics', category: 'skin', slug: 'ritual-facial', name: 'Ritual facial', short_line: 'A diagnostic hour, not a spa menu.', benefit: 'Skin that behaves better after, not just pinker.', overview: 'Analysis, treatment, massage, finish — products chosen in the room.', duration_label: '75 min', price_from: 140, price_label: 'From 140', booking_mode: 'either', image: serviceImage('ritual-facial'), extra: EXTRA },
+  { pillar: 'aesthetics', category: 'skin', slug: 'acne-plan', name: 'Acne plan', short_line: 'Congestion treated as a course, not a one-off.', benefit: 'Fewer breakouts, calmer barrier.', overview: 'A staged plan: consultation, in-room work, and a home cadence.', duration_label: 'course', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: serviceImage('acne-plan'), extra: EXTRA },
+  { pillar: 'aesthetics', category: 'skin', slug: 'pigmentation', name: 'Pigmentation', short_line: 'Evenness, without stripping the barrier.', benefit: 'Softer contrast in tone over a measured course.', overview: 'Peels, light, or topical plans — only after a consult.', duration_label: 'course', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: serviceImage('pigmentation'), extra: EXTRA },
+  { pillar: 'aesthetics', category: 'skin', slug: 'rejuvenation', name: 'Skin rejuvenation', short_line: 'Texture and dew, built over sessions.', benefit: 'Skin that looks like rest.', overview: 'Needling, boosters, or medical facials as indicated.', duration_label: 'from 60 min', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: serviceImage('rejuvenation'), extra: EXTRA },
+  { pillar: 'aesthetics', category: 'injectables', slug: 'expression-lines', name: 'Expression lines', short_line: 'Movement softened. Character kept.', benefit: 'A conservative, prescriber-led approach.', overview: 'Consultation required. Prescription anti-wrinkle treatment only where indicated.', duration_label: 'consult + treatment', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: serviceImage('expression-lines'), extra: EXTRA },
+  { pillar: 'aesthetics', category: 'injectables', slug: 'facial-balancing', name: 'Facial balancing', short_line: 'Proportion, not a trend.', benefit: 'Volume only where it serves the face you have.', overview: 'Hyaluronic acid, or a decision against it — after daylight examination.', duration_label: 'consult', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: serviceImage('facial-balancing'), extra: EXTRA },
+  { pillar: 'aesthetics', category: 'laser', slug: 'laser', name: 'Laser', short_line: 'Hair and tone, with named devices.', benefit: 'Fewer sessions when the device and the skin match.', overview: 'Laser hair and pigment work by certified operators. Consult first.', duration_label: 'from 20 min', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: serviceImage('laser'), extra: EXTRA },
+  { pillar: 'aesthetics', category: 'hair-restoration', slug: 'hair-restoration', name: 'Hair restoration', short_line: 'Density as a plan, not a promise.', benefit: 'A medical conversation about what is possible.', overview: 'PRP or medical plans after assessment. Results vary.', duration_label: 'consult', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: serviceImage('hair-restoration'), extra: EXTRA },
+  { pillar: 'aesthetics', category: 'body', slug: 'body', name: 'Body', short_line: 'Contour and skin quality, conservatively.', benefit: 'Body work only when it is indicated.', overview: 'Consultation-led body treatments. Face remains our centre.', duration_label: 'consult', price_from: null, price_label: 'Quoted at consultation', booking_mode: 'consultation', image: serviceImage('body'), extra: EXTRA },
 ]
 
 export const practitioners = [
@@ -92,10 +156,10 @@ export const locations = [
 ]
 
 export const articles = [
-  { slug: 'retinol-vs-peels', title: 'Retinol vs professional peels: what actually works', excerpt: 'A plain comparison for anyone standing between a bottle and a booking.', body: 'Aesthetics is not a race to the strongest acid. Retinol at home and peels in the rooms do different jobs. We start with the barrier. If it is thin, we wait. If pigment sits deep, a peel course may be indicated — after a consult, never from a social caption.', category: 'Skin', image: img('j-retinol'), published_at: '2026-08-31' },
-  { slug: 'lived-in-colour', title: 'Lived-in colour: why we will not copy the screenshot', excerpt: 'Your canvas decides the result. A photograph is a starting point.', body: 'We can aim for the spirit of a reference. We cannot promise its hex code. Hair history, porosity, and your light in the room matter more than the save-folder.', category: 'Hair', image: img('j-colour'), published_at: '2026-08-24' },
-  { slug: 'consultation-first', title: 'Why aesthetics at GIGIOR begins with a conversation', excerpt: 'Treatment is not self-checked-out.', body: 'Prescription work needs a prescriber and a pause. Some guests are asked to start with a ritual instead. That is the standard, not a delay tactic.', category: 'Aesthetics', image: img('j-consult'), published_at: '2026-08-17' },
-  { slug: 'bridal-timeline', title: 'A bridal timeline that does not panic the hair', excerpt: 'Trials, pigment, and the two-week rule.', body: 'Major colour changes close to the day are often refused. We would rather hold the hair than gamble it. Book the trial early.', category: 'Bridal', image: img('j-bridal'), published_at: '2026-08-10' },
+  { slug: 'retinol-vs-peels', title: 'Retinol vs professional peels: what actually works', excerpt: 'A plain comparison for anyone standing between a bottle and a booking.', body: 'Aesthetics is not a race to the strongest acid. Retinol at home and peels in the rooms do different jobs. We start with the barrier. If it is thin, we wait. If pigment sits deep, a peel course may be indicated — after a consult, never from a social caption.', category: 'Skin', image: journalImage('retinol-vs-peels'), published_at: '2026-08-31' },
+  { slug: 'lived-in-colour', title: 'Lived-in colour: why we will not copy the screenshot', excerpt: 'Your canvas decides the result. A photograph is a starting point.', body: 'We can aim for the spirit of a reference. We cannot promise its hex code. Hair history, porosity, and your light in the room matter more than the save-folder.', category: 'Hair', image: journalImage('lived-in-colour'), published_at: '2026-08-24' },
+  { slug: 'consultation-first', title: 'Why aesthetics at GIGIOR begins with a conversation', excerpt: 'Treatment is not self-checked-out.', body: 'Prescription work needs a prescriber and a pause. Some guests are asked to start with a ritual instead. That is the standard, not a delay tactic.', category: 'Aesthetics', image: journalImage('consultation-first'), published_at: '2026-08-17' },
+  { slug: 'bridal-timeline', title: 'A bridal timeline that does not panic the hair', excerpt: 'Trials, pigment, and the two-week rule.', body: 'Major colour changes close to the day are often refused. We would rather hold the hair than gamble it. Book the trial early.', category: 'Bridal', image: journalImage('bridal-timeline'), published_at: '2026-08-10' },
 ]
 
 export const memberships = [
@@ -125,13 +189,13 @@ export function grouped(pillar) {
 }
 
 export function homeData() {
-  const signatureSlugs = ['colour', 'signature-cut', 'bridal', 'ritual-facial', 'pigmentation', 'expression-lines', 'laser', 'makeup']
+  const signatureSlugs = ['signature-cut', 'colour', 'makeup', 'bridal', 'ritual-facial', 'pigmentation', 'expression-lines', 'laser']
   return {
     brand,
     signature: services.filter((s) => signatureSlugs.includes(s.slug)),
     split: {
-      salon: { title: 'Salon', line: 'Hair, styling, and beauty craft', chips: ['Cut', 'Colour', 'Bridal', 'Nails'], image: img('split-salon') },
-      aesthetics: { title: 'Aesthetics', line: 'Clinically-led skin and facial work', chips: ['Skin', 'Injectables', 'Laser', 'Body'], image: img('split-aesthetics') },
+      salon: { title: 'Salon', line: 'Hair, styling, and beauty craft', chips: ['Cut', 'Colour', 'Bridal', 'Nails'], image: photos.beautyCraft },
+      aesthetics: { title: 'Aesthetics', line: 'Clinically-led skin and facial work', chips: ['Skin', 'Injectables', 'Laser', 'Body'], image: photos.facialWork },
     },
     results: results.slice(0, 4),
     practitioners,

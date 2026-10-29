@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { api } from '../lib/api'
 import { Btn, Picture } from '../components/Ui'
+import { journalImage } from '../data/catalog'
 
 export default function Journal() {
   const [rows, setRows] = useState([])
@@ -16,7 +17,7 @@ export default function Journal() {
       <div className="card-grid" style={{ marginTop: '2rem' }}>
         {rows.map((a) => (
           <Link className="journal-card" to={`/journal/${a.slug}`} key={a.slug}>
-            <Picture src={a.image} alt="" sizes="360px" />
+            <Picture src={journalImage(a.slug) || a.image} alt="" sizes="360px" />
             <p className="eyebrow" style={{ marginTop: '0.8rem' }}>{a.category}</p>
             <h2 className="display" style={{ fontSize: '1.8rem' }}>{a.title}</h2>
             <p className="muted">{a.excerpt}</p>
@@ -40,7 +41,7 @@ export function Article() {
       <p className="breadcrumbs"><Link to="/journal">Journal</Link> / {row.title}</p>
       <p className="eyebrow">{row.category}</p>
       <h1 className="display">{row.title}</h1>
-      <Picture src={row.image} alt="" sizes="80vw" />
+      <Picture src={journalImage(row.slug) || row.image} alt="" sizes="80vw" />
       <p style={{ maxWidth: '62ch', marginTop: '1.6rem', fontSize: '1.12rem' }}>{row.body}</p>
       <div style={{ marginTop: '2rem' }}><Btn to="/book?path=consult" fill>Book a consultation</Btn></div>
     </article>

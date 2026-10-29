@@ -26,7 +26,7 @@ export default function About() {
           <Picture src="/images/about-arches.png" alt="The GIGIOR house" sizes="50vw" />
         </figure>
       </div>
-      <section className="section" style={{ background: 'var(--cream)' }}>
+      <section className="section" style={{ background: 'var(--surface)' }}>
         <div className="wrap">
           <p className="eyebrow">The floor</p>
           <h2 className="display" style={{ fontSize: '2.8rem', marginBottom: '1.4rem' }}>The same faces</h2>
@@ -56,7 +56,7 @@ export default function About() {
       </section>
       <section className="final-cta section">
         <h2 className="display">Sit. We will look before we touch.</h2>
-        <Btn to="/book" fill light>Book appointment</Btn>
+        <Btn to="/book" fill>Book appointment</Btn>
       </section>
     </div>
   )

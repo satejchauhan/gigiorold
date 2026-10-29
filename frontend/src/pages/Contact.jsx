@@ -27,7 +27,7 @@ export default function Contact() {
         <h1 className="display">The door is by appointment</h1>
         <p>If you are in the book, come as you are. If you are not, write first — or reserve a time.</p>
         <p style={{ marginTop: '1.4rem' }}>
-          <strong className="wordmark" style={{ letterSpacing: '0.2em' }}>GIGIOR</strong><br />
+          <strong className="wordmark" style={{ fontSize: '2.4rem' }}>Gigior</strong><br />
           12 House Street, [City]<br />
           +00 000 000 0000<br />
           house@gigior.local
